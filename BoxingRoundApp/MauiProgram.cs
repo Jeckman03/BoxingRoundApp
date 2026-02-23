@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using BoxingRoundApp.Services;
+using BoxingRoundApp.ViewModel;
+using Microsoft.Extensions.Logging;
 
 namespace BoxingRoundApp
 {
@@ -14,6 +16,16 @@ namespace BoxingRoundApp
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+
+
+            // Pages
+            builder.Services.AddTransient<MainPage>();
+
+            // ViewModels
+            builder.Services.AddTransient<MainPageViewModel>();
+
+            // Services
+            builder.Services.AddSingleton<BoxingDatabase>();
 
 #if DEBUG
     		builder.Logging.AddDebug();
