@@ -62,6 +62,12 @@ namespace BoxingRoundApp.Services
                 .ToListAsync();
         }
 
+        public async Task<WorkoutProfileModel> GetProfileByIdAsync(int id)
+        {
+            await Init();
+            return await _database.Table<WorkoutProfileModel>().Where(x => x.Id == id).FirstOrDefaultAsync();
+        }
+
         public async void DeleteProfileAsync(int profileId)
         {
             await Init();

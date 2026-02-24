@@ -1,4 +1,5 @@
 ﻿using BoxingRoundApp.Models;
+using BoxingRoundApp.Services;
 using BoxingRoundApp.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -15,7 +16,14 @@ namespace BoxingRoundApp.ViewModel
         private ObservableCollection<WorkoutProfileModel> _workoutProfiles = new();
 
         [ObservableProperty]
-        private int _selecetedProfileId;
+        private WorkoutProfileModel _selecetedProfile;
+
+        private readonly BoxingDatabase _boxingDatabase;
+
+        public MainPageViewModel(BoxingDatabase boxingDatabase)
+        {
+            _boxingDatabase = boxingDatabase;
+        }
 
         public MainPageViewModel()
         {
@@ -28,6 +36,15 @@ namespace BoxingRoundApp.ViewModel
         private async Task CreateNewProfile()
         {
             await Shell.Current.GoToAsync("CreateWorkoutProfilePage");
+        }
+
+        [RelayCommand]
+        private async Task ProfileSelection(WorkoutProfileModel SelectedProfile)
+        {
+            if (SelectedProfile == null)
+                return;
+
+            await Shell.Current.GoToAsync($"{nameof(ActivateWorkoutProfilePage)}?ProfileId={SelectedProfile.Id}");
         }
     }
 }

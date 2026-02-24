@@ -2,6 +2,7 @@
 using BoxingRoundApp.ViewModel;
 using BoxingRoundApp.Views;
 using Microsoft.Extensions.Logging;
+using CommunityToolkit.Maui;
 
 namespace BoxingRoundApp
 {
@@ -12,6 +13,7 @@ namespace BoxingRoundApp
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -22,10 +24,12 @@ namespace BoxingRoundApp
             // Pages
             builder.Services.AddTransient<MainPage>();
             builder.Services.AddTransient<CreateWorkoutProfilePage>();
+            builder.Services.AddTransient<ActivateWorkoutProfilePage>();
 
             // ViewModels
             builder.Services.AddTransient<MainPageViewModel>();
             builder.Services.AddTransient<CreateWorkoutProfileViewModel>();
+            builder.Services.AddTransient<ActivateWorkoutProfileViewModel>();
 
             // Services
             builder.Services.AddSingleton<BoxingDatabase>();
