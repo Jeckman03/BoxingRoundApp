@@ -2,7 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:BoxingRoundApp.ViewModel"
+             xmlns:model="clr-namespace:BoxingRoundApp.Models"
              x:Class="BoxingRoundApp.MainPage"
+             
              Title="Boxing Round App">
 
     <Grid RowDefinitions="auto, *"
@@ -14,25 +16,37 @@
 
         <Button Grid.Row="0"
                 Grid.Column="1"
-                Text="Create New Routine" />
+                Text="Create New Routine"
+                Command="{Binding CreateNewProfileCommand}"/>
 
-        <CollectionView Grid.RowSpan="2"
-                        Grid.Column="1"
-                        ItemsSource="{Binding WorkoutProfiles}">
+        <CollectionView Grid.Row="1"
+                        Grid.ColumnSpan="2"
+                        ItemsSource="{Binding WorkoutProfiles}"
+                        Margin="10">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Grid RowDefinitions="*, *"
-                          ColumnDefinitions="*, *">
-                        <Label Grid.Row="0"
-                               Grid.Column="0"
-                               Text="{Binding this}" />
-                        <Label Grid.Row="0"
-                               Grid.Column="1"
-                               Text="Rounds" />
-                        <Label Grid.RowSpan="2"
-                               Grid.Column="1"
-                               Text="Total Time" />
-                    </Grid>
+                    <Border Margin="0,5,0,0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+                        
+                        <Grid RowDefinitions="*, *"
+                              ColumnDefinitions="*, *">
+                            <Label Grid.Row="0"
+                                   Grid.Column="0"
+                                   Padding="10"
+                                   Text="{Binding Name}" />
+                            <Label Grid.Row="1"
+                                   Grid.Column="0"
+                                   Padding="10"
+                                   Text="{Binding Rounds}" />
+                            <Label Grid.RowSpan="2"
+                                   Grid.Column="1"
+                                   Padding="10"
+                                   VerticalTextAlignment="Center"
+                                   Text="{Binding TotalTime}" />
+                        </Grid>
+                    </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

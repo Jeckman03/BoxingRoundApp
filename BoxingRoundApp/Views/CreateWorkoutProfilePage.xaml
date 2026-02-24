@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:BoxingRoundApp.ViewModel"
+             x:Class="BoxingRoundApp.Views.CreateWorkoutProfilePage"
+             Title="Create Workout Profile">
+    <VerticalStackLayout>
+        <Label Text="Save"
+               HorizontalTextAlignment="End"/>
+
+        <Border>
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="5" />
+            </Border.StrokeShape>
+
+            <Entry Placeholder="Name" />
+        </Border>
+        
+
+        <CollectionView ItemsSource="{Binding Rounds}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid ColumnDefinitions="*, *, *">
+                        <HorizontalStackLayout Grid.Column="0">
+                            <Label Text="Round: "
+                                   VerticalTextAlignment="Center"
+                                   Padding="5"/>
+                            <Label Text="1"
+                                   FontAttributes="Bold"
+                                   VerticalTextAlignment="Center"/>
+                        </HorizontalStackLayout>
+                        
+
+                        <HorizontalStackLayout Grid.Column="1">
+                            <Label Text="Time: "
+                                   VerticalTextAlignment="Center" />
+                            <Border>
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="5" />
+                                </Border.StrokeShape>
+                                <Entry Placeholder="0"
+                                       HorizontalTextAlignment="Center"
+                                       Keyboard="Numeric" />
+                            </Border>
+                            <Label Text="sec"
+                                   VerticalTextAlignment="Center"
+                                   Padding="5"/>
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Grid.Column="2">
+                            <Border>
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="5" />
+                                </Border.StrokeShape>
+                                <Entry Placeholder="0"
+                                       HorizontalTextAlignment="Center"
+                                       Keyboard="Numeric"/>
+                            </Border>
+                            <Label Text="rest"
+                                   VerticalTextAlignment="Center"
+                                   Padding="5"/>
+                        </HorizontalStackLayout>
+                        
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <HorizontalStackLayout HorizontalOptions="Center"
+                               Margin="10">
+            <Button Text="-"
+                    WidthRequest="100"
+                    Margin="5"/>
+            <Button Text="+"
+                    WidthRequest="100"
+                    Margin="5"/>
+        </HorizontalStackLayout>
+        
+    </VerticalStackLayout>
+</ContentPage>
