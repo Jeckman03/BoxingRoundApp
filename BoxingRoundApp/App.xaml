@@ -9,6 +9,15 @@
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <Style TargetType="ActivityIndicator">
+                <Setter Property="IsRunning" Value="{Binding IsBusy}" />
+                <Setter Property="IsVisible" Value="{Binding IsBusy}" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Color" Value="Gold" />
+            </Style>
         </ResourceDictionary>
+
     </Application.Resources>
 </Application>

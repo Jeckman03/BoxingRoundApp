@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BoxingRoundApp.Services
+namespace BoxingRoundApp.Services.Data
 {
     public static class DbSettings
     {

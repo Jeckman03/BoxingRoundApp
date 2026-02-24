@@ -1,11 +1,12 @@
 ﻿using BoxingRoundApp.Models;
-using BoxingRoundApp.Services;
+using BoxingRoundApp.Services.Data;
 using BoxingRoundApp.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Text;
 
 namespace BoxingRoundApp.ViewModel
@@ -16,20 +17,26 @@ namespace BoxingRoundApp.ViewModel
         private ObservableCollection<WorkoutProfileModel> _workoutProfiles = new();
 
         [ObservableProperty]
-        private WorkoutProfileModel _selecetedProfile;
+        private WorkoutProfileModel _selectedProfile;
 
         private readonly BoxingDatabase _boxingDatabase;
+
 
         public MainPageViewModel(BoxingDatabase boxingDatabase)
         {
             _boxingDatabase = boxingDatabase;
         }
 
-        public MainPageViewModel()
+        public async Task LoadWorkoutProfilesAsync()
         {
-            WorkoutProfiles.Add(new WorkoutProfileModel { Name = "Killer Workout", Rounds = 10, TotalTime = 23 });
-            WorkoutProfiles.Add(new WorkoutProfileModel { Name = "Easy Workout", Rounds = 5, TotalTime = 10 });
-            WorkoutProfiles.Add(new WorkoutProfileModel { Name = "Power Workout", Rounds = 6, TotalTime = 15 });
+            WorkoutProfiles.Clear();
+            var profiles = await _boxingDatabase.GetProfilesAsync();
+
+            foreach (var profile in profiles)
+            {
+                WorkoutProfiles.Add(profile);
+            }
+
         }
 
         [RelayCommand]
@@ -41,10 +48,61 @@ namespace BoxingRoundApp.ViewModel
         [RelayCommand]
         private async Task ProfileSelection(WorkoutProfileModel SelectedProfile)
         {
-            if (SelectedProfile == null)
-                return;
+            try
+            {
+                IsBusy = true;
 
-            await Shell.Current.GoToAsync($"{nameof(ActivateWorkoutProfilePage)}?ProfileId={SelectedProfile.Id}");
+                if (SelectedProfile == null)
+                    return;
+
+                await Shell.Current.GoToAsync($"{nameof(ActivateWorkoutProfilePage)}?ProfileId={SelectedProfile.Id}");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            finally { IsBusy = false; }
+        }
+
+        [RelayCommand]
+        private async Task ShowOptions(WorkoutProfileModel profile)
+        {
+            try
+            {
+                IsBusy = true;
+
+                if (profile == null)
+                {
+                    Debug.WriteLine("Profile is null");
+                    return;
+                }
+
+                int profileId = profile.Id;
+
+                var result = await Shell.Current.DisplayActionSheetAsync("Worlout Profile Options", "Cancel", null, "Edit", "Delete");
+
+                if (result == "Edit")
+                {
+                    // Go to the CreateWorkoutPage or create a new EditWorkoutPage
+                }
+                else if (result == "Delete")
+                {
+                    bool confirm = await Shell.Current.DisplayAlertAsync("Delete Profile", $"Are you sure you want to delete {profile.Name}?", "Yes", "No");
+
+                    if (confirm)
+                    {
+                        await _boxingDatabase.DeleteProfileAsync(profile.Id);
+                        WorkoutProfiles.Remove(profile); 
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error failed to Show edit and delete window {ex.Message}");
+                throw;
+            }
+            finally { IsBusy = false; }
         }
     }
 }

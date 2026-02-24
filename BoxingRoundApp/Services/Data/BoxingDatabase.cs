@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BoxingRoundApp.Services
+namespace BoxingRoundApp.Services.Data
 {
     public class BoxingDatabase
     {
@@ -68,7 +68,7 @@ namespace BoxingRoundApp.Services
             return await _database.Table<WorkoutProfileModel>().Where(x => x.Id == id).FirstOrDefaultAsync();
         }
 
-        public async void DeleteProfileAsync(int profileId)
+        public async Task DeleteProfileAsync(int profileId)
         {
             await Init();
             var profile = await _database.Table<WorkoutProfileModel>().Where(p => p.Id == profileId).FirstOrDefaultAsync();
@@ -84,7 +84,7 @@ namespace BoxingRoundApp.Services
             }
         }
 
-        public async void DeleteRoundSettingsAsync(int roundSettingsId)
+        public async Task DeleteRoundSettingsAsync(int roundSettingsId)
         {
             await Init();
             var roundSettings = await _database.Table<RoundSettingsModel>().Where(rs => rs.Id == roundSettingsId).FirstOrDefaultAsync();

@@ -5,11 +5,14 @@
              xmlns:local="clr-namespace:BoxingRoundApp.ViewModel"
              xmlns:model="clr-namespace:BoxingRoundApp.Models"
              x:Class="BoxingRoundApp.MainPage"
-             
+             x:Name="ThisPage"
              Title="Boxing Round App">
 
+    
     <Grid RowDefinitions="auto, *"
           ColumnDefinitions="*, auto">
+
+        <ActivityIndicator />
 
         <Label Grid.Row="0"
                Grid.Column="0"
@@ -27,16 +30,24 @@
                         SelectionMode="Single">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Border Margin="0,5,0,0">
+                    <Border Margin="0,5,0,0"
+                            x:Name="ItemBorder">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="10" />
                         </Border.StrokeShape>
 
-                        <Border.GestureRecognizers>
-                            <TapGestureRecognizer
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:MainPageViewModel}}, Path=ProfileSelectionCommand}"
-                                CommandParameter="{Binding .}" />
-                        </Border.GestureRecognizers>
+                        <Border.Behaviors>
+                            <toolkit:TouchBehavior 
+                                Command="{Binding BindingContext.ProfileSelectionCommand, Source={x:Reference ThisPage}}"
+                                CommandParameter="{Binding BindingContext, Source={x:Reference ItemBorder}}"
+                                
+                                LongPressDuration="750"
+                                LongPressCommand="{Binding BindingContext.ShowOptionsCommand, Source={x:Reference ThisPage}}"
+                                LongPressCommandParameter="{Binding BindingContext, Source={x:Reference ItemBorder}}"
+                                
+                                DefaultAnimationDuration="250"
+                                PressedOpacity="0.6"/>
+                        </Border.Behaviors>
 
                         <Grid RowDefinitions="*, *"
                               ColumnDefinitions="*, *">

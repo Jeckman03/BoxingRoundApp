@@ -1,8 +1,8 @@
-﻿using BoxingRoundApp.Services;
-using BoxingRoundApp.ViewModel;
+﻿using BoxingRoundApp.ViewModel;
 using BoxingRoundApp.Views;
 using Microsoft.Extensions.Logging;
 using CommunityToolkit.Maui;
+using BoxingRoundApp.Services.Data;
 
 namespace BoxingRoundApp
 {

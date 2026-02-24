@@ -4,6 +4,9 @@
              x:Class="BoxingRoundApp.Views.ActivateWorkoutProfilePage"
              Title="ActivateWorkoutProfilePage">
     <VerticalStackLayout>
+
+        <ActivityIndicator />
+        
         <Label 
             Text="Welcome to .NET MAUI!"
             VerticalOptions="Center" 
