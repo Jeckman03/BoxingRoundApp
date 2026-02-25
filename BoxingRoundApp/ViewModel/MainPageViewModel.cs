@@ -1,5 +1,6 @@
 ﻿using BoxingRoundApp.Models;
 using BoxingRoundApp.Services.Data;
+using BoxingRoundApp.Services.Workouts;
 using BoxingRoundApp.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -31,10 +32,13 @@ namespace BoxingRoundApp.ViewModel
         {
             WorkoutProfiles.Clear();
             var profiles = await _boxingDatabase.GetProfilesAsync();
+            var totalTime = 0;
 
             foreach (var profile in profiles)
             {
                 WorkoutProfiles.Add(profile);
+
+                var rounds = await _boxingDatabase.GetRoundSettingsAsync(profile.Id);
             }
 
         }

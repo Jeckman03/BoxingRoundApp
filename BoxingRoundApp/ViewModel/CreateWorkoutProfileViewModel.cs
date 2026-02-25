@@ -19,15 +19,6 @@ namespace BoxingRoundApp.ViewModel
         [ObservableProperty]
         private string _workoutName;
 
-        [ObservableProperty]
-        private int _roundTime;
-
-        [ObservableProperty]
-        private int _roundRestTime;
-
-        [ObservableProperty]
-        private string _roundDescription;
-
         public int RoundCount { get; set; } = 0;
 
         private readonly BoxingDatabase _boxingDatabase;
@@ -42,7 +33,7 @@ namespace BoxingRoundApp.ViewModel
         {
             RoundCount++;
             // Add round field in UI
-            Rounds.Add(new RoundSettingsModel { RoundNumber = RoundCount});
+            Rounds.Add(new RoundSettingsModel { RoundNumber = RoundCount });
         }
 
         [RelayCommand]
@@ -64,6 +55,14 @@ namespace BoxingRoundApp.ViewModel
             try
             {
                 IsBusy = true;
+
+                bool hasInvalidRounds = Rounds.Any(r => r.DurationSeconds <= 0);
+
+                if (hasInvalidRounds)
+                {
+                    await Shell.Current.DisplayAlertAsync("Error", "All rounds have a duration greater than 0", "OK");
+                    return;
+                }
 
                 WorkoutProfileModel newProfile = new WorkoutProfileModel();
                 newProfile.Name = WorkoutName;
@@ -92,7 +91,6 @@ namespace BoxingRoundApp.ViewModel
                 Debug.WriteLine($"Error with saving Profile and Rounds {ex.Message}");
             }
             finally { IsBusy = false; }
-
         }
     }
 }

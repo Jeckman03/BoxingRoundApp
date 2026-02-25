@@ -10,7 +10,7 @@ namespace BoxingRoundApp.Models
         [MaxLength(50)]
         public string Name { get; set; }
         public int Rounds { get; set; }
-        public int TotalTime { get; set; }
+        public string TotalTime { get; set; }
 
     }
 }

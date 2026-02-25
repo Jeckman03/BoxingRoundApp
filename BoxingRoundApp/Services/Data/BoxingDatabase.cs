@@ -53,7 +53,7 @@ namespace BoxingRoundApp.Services.Data
             return await _database.Table<WorkoutProfileModel>().ToListAsync();
         }
 
-        public async Task<List<RoundSettingsModel>> GetRoundSettingsAsync(int profileId)
+        public async Task<IEnumerable<RoundSettingsModel>> GetRoundSettingsAsync(int profileId)
         {
             await Init();
             return await _database.Table<RoundSettingsModel>()

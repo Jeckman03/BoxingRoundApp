@@ -9,4 +9,14 @@ public partial class CreateWorkoutProfilePage : ContentPage
 		InitializeComponent();
 		BindingContext = createWorkoutProfileViewModel;
 	}
+
+    private void OnEntryFocused(object sender, FocusEventArgs e)
+    {
+        var entry = (Entry)sender;
+
+        if (entry.Text == "0")
+        {
+            entry.Text = string.Empty;
+        }
+    }
 }

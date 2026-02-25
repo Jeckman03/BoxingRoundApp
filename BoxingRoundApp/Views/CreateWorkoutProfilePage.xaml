@@ -4,18 +4,19 @@
              xmlns:local="clr-namespace:BoxingRoundApp.ViewModel"
              x:Class="BoxingRoundApp.Views.CreateWorkoutProfilePage"
              Title="Create Workout Profile">
-    <VerticalStackLayout>
+    <Grid RowDefinitions="Auto, Auto, *, Auto, Auto">
 
         <ActivityIndicator />
 
-        <Button Text="Save"
-               FontAttributes="Bold"
-               Margin="10"
+        <Button Grid.Row="0"
+                Text="Save"
+                FontAttributes="Bold"
+                Margin="10"
                 HorizontalOptions="End"
-               Command="{Binding SaveWorkoutProfileCommand}">
+                Command="{Binding SaveWorkoutProfileCommand}">
         </Button>
 
-        <Border Margin="10">
+        <Border Margin="10" Grid.Row="1">
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="5" />
             </Border.StrokeShape>
@@ -24,16 +25,15 @@
                    Text="{Binding WorkoutName}"/>
         </Border>
 
-        <CollectionView ItemsSource="{Binding Rounds}">
+        <CollectionView ItemsSource="{Binding Rounds}" Grid.Row="2">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-
                     <Border Margin="5">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="5" />
                         </Border.StrokeShape>
 
-                        <Grid ColumnDefinitions="*, *, *" RowDefinitions="*, *" Margin="10">
+                        <Grid ColumnDefinitions="*, Auto, *" RowDefinitions="*, *" Margin="10">
                             
 
                             <HorizontalStackLayout Grid.Column="0" Grid.Row="0" Margin="0,0,0,10">
@@ -46,33 +46,37 @@
                             </HorizontalStackLayout>
 
                             <HorizontalStackLayout Grid.Column="1" Grid.Row="0" Margin="0,0,0,10">
-                            <Label Text="Time: "
+                            <Label Text="Duration: "
                                    VerticalTextAlignment="Center" />
                             <Border>
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="5" />
                                 </Border.StrokeShape>
                                 <Entry Placeholder="0"
+                                       PlaceholderColor="Gray"
                                        HorizontalTextAlignment="Center"
                                        Keyboard="Numeric"
-                                       Text="{Binding RoundTime}"/>
+                                       Focused="OnEntryFocused"
+                                       Text="{Binding DurationSeconds}"/>
                             </Border>
                             <Label Text="sec"
                                    VerticalTextAlignment="Center"
                                    Padding="5"/>
                         </HorizontalStackLayout>
 
-                            <HorizontalStackLayout Grid.Column="2" Grid.Row="0" Margin="0,0,0,10">
+                            <HorizontalStackLayout Grid.Column="2" Grid.Row="0" Margin="0,0,0,10" HorizontalOptions="End">
                             <Border>
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="5" />
                                 </Border.StrokeShape>
                                 <Entry Placeholder="0"
+                                       PlaceholderColor="Gray"
                                        HorizontalTextAlignment="Center"
                                        Keyboard="Numeric"
-                                       Text="{Binding RoundRestTime}"/>
+                                       Focused="OnEntryFocused"
+                                       Text="{Binding RestSeconds}"/>
                             </Border>
-                            <Label Text="rest"
+                            <Label Text="Rest"
                                    VerticalTextAlignment="Center"
                                    Padding="5"/>
                         </HorizontalStackLayout>
@@ -82,7 +86,7 @@
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="5" />
                                 </Border.StrokeShape>
-                                <Entry Placeholder="Round Descritpion (e.g. Cross Jab/ 1 1 2)"
+                                <Entry Placeholder="Round Combo (e.g. Cross Jab/ 1 1 2)"
                                        Text="{Binding RoundDescription}"/>
 
                             </Border>
@@ -94,10 +98,12 @@
         </CollectionView>
 
         <Label Text="Add/Remove Rounds"
-               HorizontalTextAlignment="Center"/>
+               HorizontalTextAlignment="Center"
+               Grid.Row="3"/>
 
         <HorizontalStackLayout HorizontalOptions="Center"
-                               Margin="10">
+                               Margin="10"
+                               Grid.Row="4">
             <Button Text="-"
                     WidthRequest="100"
                     Margin="5"
@@ -108,5 +114,5 @@
                     Command="{Binding AddRoundCommand}"/>
         </HorizontalStackLayout>
         
-    </VerticalStackLayout>
+    </Grid>
 </ContentPage>

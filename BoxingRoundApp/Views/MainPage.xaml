@@ -16,7 +16,10 @@
 
         <Label Grid.Row="0"
                Grid.Column="0"
-               Text="Routines" />
+               Text="Routines"
+               FontAttributes="Bold"
+               FontSize="Large"
+               Margin="10"/>
 
         <Button Grid.Row="0"
                 Grid.Column="1"
@@ -51,19 +54,32 @@
 
                         <Grid RowDefinitions="*, *"
                               ColumnDefinitions="*, *">
-                            <Label Grid.Row="0"
-                                   Grid.Column="0"
-                                   Padding="10"
-                                   Text="{Binding Name}" />
-                            <Label Grid.Row="1"
-                                   Grid.Column="0"
-                                   Padding="10"
-                                   Text="{Binding Rounds}" />
-                            <Label Grid.RowSpan="2"
-                                   Grid.Column="1"
-                                   Padding="10"
-                                   VerticalTextAlignment="Center"
-                                   Text="{Binding TotalTime}" />
+                            <HorizontalStackLayout Grid.Column="0"
+                                                   Grid.Row="0"
+                                                   Padding="10">
+                                <Label FontAttributes="Bold"
+                                       FontSize="Large"
+                                       Text="{Binding Name}" />
+                            </HorizontalStackLayout>
+
+                            <HorizontalStackLayout Grid.Column="1"
+                                                   Grid.Row="0"
+                                                   Padding="10"
+                                                   HorizontalOptions="End">
+                                <Label Text="Total Time: " />
+                                <Label Text="{Binding TotalTime}" />
+                            </HorizontalStackLayout>
+
+                            <HorizontalStackLayout Grid.Row="1"
+                                                   Grid.Column="0"
+                                                   Padding="10">
+                                <Label Text="Rounds: " />
+                                <Label Text="{Binding Rounds}"
+                                       FontAttributes="Bold"/>
+                            </HorizontalStackLayout>
+                            
+                            
+                            
                         </Grid>
                     </Border>
                 </DataTemplate>

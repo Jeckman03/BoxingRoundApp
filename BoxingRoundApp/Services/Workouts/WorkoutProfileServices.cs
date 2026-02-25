@@ -8,12 +8,12 @@ namespace BoxingRoundApp.Services.Workouts
 {
     public static class WorkoutProfileServices
     {
-        public static int CalculateTotalRounds(ObservableCollection<RoundSettingsModel> rounds)
+        public static int CalculateTotalRounds(IEnumerable<RoundSettingsModel> rounds)
         {
             return rounds.Count();
         }
 
-        public static int CalculateTotalWorkoutTime(ObservableCollection<RoundSettingsModel> rounds)
+        public static string CalculateTotalWorkoutTime(IEnumerable<RoundSettingsModel> rounds)
         {
             int totalSeconds = 0;
 
@@ -23,9 +23,9 @@ namespace BoxingRoundApp.Services.Workouts
                 totalSeconds += round.RestSeconds;
             }
 
-            TimeSpan totalTimeSec = TimeSpan.FromSeconds(totalSeconds);
+            TimeSpan t = TimeSpan.FromSeconds(totalSeconds);
 
-            return totalSeconds;
+            return $"{t.Hours:D1}:{t.Minutes:D2}:{t.Seconds:D2}";
         }
     }
 }
