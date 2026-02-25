@@ -40,7 +40,7 @@
                                 <Label Text="Round: "
                                        VerticalTextAlignment="Center"
                                        Padding="5"/>
-                                <Label Text="{Binding Source={RelativeSource AncestorType={x:Type local:CreateWorkoutProfileViewModel}}, Path=RoundCount}"
+                                <Label Text="{Binding RoundNumber}"
                                        FontAttributes="Bold"
                                        VerticalTextAlignment="Center"/>
                             </HorizontalStackLayout>

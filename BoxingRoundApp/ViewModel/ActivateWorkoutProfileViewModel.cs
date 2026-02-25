@@ -1,6 +1,7 @@
 ﻿using BoxingRoundApp.Models;
 using BoxingRoundApp.Services.Data;
 using BoxingRoundApp.Services.Workouts;
+using BoxingRoundApp.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
@@ -53,7 +54,7 @@ namespace BoxingRoundApp.ViewModel
         [RelayCommand]
         private async Task EditRounds()
         {
-
+            await Shell.Current.GoToAsync($"{nameof(CreateWorkoutProfilePage)}?ProfileId={ProfileId}&Source=ActivateWorkout");
         }
 
         [RelayCommand]

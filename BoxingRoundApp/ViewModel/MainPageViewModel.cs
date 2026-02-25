@@ -88,6 +88,7 @@ namespace BoxingRoundApp.ViewModel
                 if (result == "Edit")
                 {
                     // Go to the CreateWorkoutPage or create a new EditWorkoutPage
+                    await Shell.Current.GoToAsync($"{nameof(CreateWorkoutProfilePage)}?ProfileId={profile.Id}");
                 }
                 else if (result == "Delete")
                 {
