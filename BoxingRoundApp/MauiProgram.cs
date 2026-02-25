@@ -3,6 +3,7 @@ using BoxingRoundApp.Views;
 using Microsoft.Extensions.Logging;
 using CommunityToolkit.Maui;
 using BoxingRoundApp.Services.Data;
+using BoxingRoundApp.Services.Workouts;
 
 namespace BoxingRoundApp
 {
@@ -25,14 +26,17 @@ namespace BoxingRoundApp
             builder.Services.AddTransient<MainPage>();
             builder.Services.AddTransient<CreateWorkoutProfilePage>();
             builder.Services.AddTransient<ActivateWorkoutProfilePage>();
+            builder.Services.AddTransient<StartWorkoutPage>();
 
             // ViewModels
             builder.Services.AddTransient<MainPageViewModel>();
             builder.Services.AddTransient<CreateWorkoutProfileViewModel>();
             builder.Services.AddTransient<ActivateWorkoutProfileViewModel>();
+            builder.Services.AddTransient<StartWorkoutViewModel>();
 
             // Services
             builder.Services.AddSingleton<BoxingDatabase>();
+            builder.Services.AddSingleton<TimerServices>();
 
 #if DEBUG
     		builder.Logging.AddDebug();

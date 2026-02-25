@@ -60,7 +60,7 @@ namespace BoxingRoundApp.ViewModel
         [RelayCommand]
         private async Task StartWorkout()
         {
-
+            await Shell.Current.GoToAsync($"{nameof(StartWorkoutPage)}?ProfileId={ProfileId}");
         }
     }
 }
