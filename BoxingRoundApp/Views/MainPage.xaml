@@ -77,16 +77,14 @@
                                 <Label Text="{Binding Rounds}"
                                        FontAttributes="Bold"/>
                             </HorizontalStackLayout>
-                            
-                            
-                            
+
+
+
                         </Grid>
                     </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-
-
     </Grid>
 
 </ContentPage>

@@ -1,12 +1,62 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="BoxingRoundApp.Views.StartWorkoutPage"
-             Title="StartWorkoutPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             Title="Workout in Progress">
+
+    <Grid RowDefinitions="*, 2*,*" Padding="20">
+        <Grid.Style>
+            <Style TargetType="Grid">
+                <Setter Property="BackgroundColor" Value="#212121" />
+                <Style.Triggers>
+                    <DataTrigger TargetType="Grid" Binding="{Binding CurrentPhase}" Value="Rest">
+                        <Setter Property="BackgroundColor" Value="#2E7D32" />
+                    </DataTrigger>
+                    <DataTrigger TargetType="Grid" Binding="{Binding IsWorkPhase}" Value="True">
+                        <Setter Property="BackgroundColor" Value="#C62828" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Style>
+
+        <toolkit:MediaElement x:Name="HiddenPlayer"
+          ShouldAutoPlay="False"
+          IsVisible="False" />
+    
+        <Label Grid.Row="0"
+               Text="{Binding CurrentPhase}"
+               FontSize="32"
+               FontAttributes="Bold"
+               TextColor="White"
+               HorizontalOptions="Center"
+               VerticalOptions="Center" />
+
+        <Label Grid.Row="1"
+               Text="{Binding FormattedTime}"
+               TextColor="{Binding TimerColor}"
+               FontSize="150"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"
+               VerticalOptions="Center" />
+
+        <Label Grid.Row="2"
+               Text="{Binding CurrentCombo}"
+               FontSize="24"
+               TextColor="White"
+               HorizontalTextAlignment="Center"
+               LineBreakMode="WordWrap"
+               VerticalOptions="Start" />
+
+        <Button Grid.Row="2"
+                Text="STOP WORKOUT"
+                Command="{Binding StopCommand}"
+                BackgroundColor="White"
+                TextColor="Black"
+                HeightRequest="60"
+                VerticalOptions="End"
+                Margin="0,0,0,20"/>
+
+    </Grid>
 </ContentPage>
+

@@ -15,6 +15,7 @@ namespace BoxingRoundApp
             builder
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
+                .UseMauiCommunityToolkitMediaElement(isAndroidForegroundServiceEnabled: false)
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -37,6 +38,7 @@ namespace BoxingRoundApp
             // Services
             builder.Services.AddSingleton<BoxingDatabase>();
             builder.Services.AddSingleton<TimerServices>();
+            builder.Services.AddSingleton<AudioManager>();
 
 #if DEBUG
     		builder.Logging.AddDebug();

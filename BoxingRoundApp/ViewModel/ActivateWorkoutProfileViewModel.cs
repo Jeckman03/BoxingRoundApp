@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 
 namespace BoxingRoundApp.ViewModel
@@ -60,7 +61,11 @@ namespace BoxingRoundApp.ViewModel
         [RelayCommand]
         private async Task StartWorkout()
         {
-            await Shell.Current.GoToAsync($"{nameof(StartWorkoutPage)}?ProfileId={ProfileId}");
+            var navigationParameter = new Dictionary<string, object>
+            {
+                {"Rounds", Rounds.ToList() }
+            };
+            await Shell.Current.GoToAsync($"StartWorkoutPage", navigationParameter);
         }
     }
 }

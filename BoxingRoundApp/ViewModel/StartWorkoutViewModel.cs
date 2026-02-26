@@ -1,4 +1,5 @@
-﻿using BoxingRoundApp.Models;
+﻿
+using BoxingRoundApp.Models;
 using BoxingRoundApp.Services.Data;
 using BoxingRoundApp.Services.Workouts;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -10,34 +11,59 @@ using System.Text;
 
 namespace BoxingRoundApp.ViewModel
 {
-    [QueryProperty(nameof(ProfileId), "ProfileId")]
+    [QueryProperty(nameof(Rounds), "Rounds")]
     public partial class StartWorkoutViewModel : BaseViewModel
     {
-        private readonly BoxingDatabase _boxingDatabase;
         public TimerServices _timerServices;
+        public AudioManager AudioManager { get; }
+        [ObservableProperty]
+        private List<RoundSettingsModel> _rounds;
 
         [ObservableProperty]
-        private ObservableCollection<RoundSettingsModel> _rounds = new();
-
-        [ObservableProperty]
-        private int profileId;
-
-        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(FormattedTime))]
         private int displayTime;
 
         [ObservableProperty]
         private string currentPahse;
 
-        public StartWorkoutViewModel(BoxingDatabase boxingDatabase, TimerServices timerServices)
+        [ObservableProperty]
+        private bool isWorkPhase;
+
+        [ObservableProperty]
+        private string currentCombo;
+
+        public Color TimerColor => (IsWorkPhase && DisplayTime <= 10) ? Colors.OrangeRed : Colors.White;
+
+        public string FormattedTime
+        { 
+            get
+            {
+                int minutes = DisplayTime / 60;
+                int seconds = DisplayTime % 60;
+
+                return $"{minutes}:{seconds:D2}";
+            }
+        }
+
+        public StartWorkoutViewModel(TimerServices timerServices, AudioManager audioManager)
         {
-            _boxingDatabase = boxingDatabase;
             _timerServices = timerServices;
+            AudioManager = audioManager;
         }
 
         [RelayCommand]
-        private async Task StartWorkout(List<RoundSettingsModel> rounds)
+        public async Task StartWorkoutAsync()
         {
-            await _timerServices.RunWorkout(rounds, (time) => DisplayTime = time, (phase) => CurrentPahse = phase);
+            if (Rounds == null || Rounds.Count == 0) return;
+
+            await _timerServices.RunWorkout(Rounds, 
+                                            (time) => DisplayTime = time,
+                                            (phase) => 
+                                            {
+                                                CurrentPahse = phase;
+                                                IsWorkPhase = !phase.Contains("Rest");
+                                            },
+                                            () => { });
         }
     }
 }

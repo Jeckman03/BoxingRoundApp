@@ -1,5 +1,6 @@
 ﻿
 using BoxingRoundApp.Models;
+using CommunityToolkit.Maui.Views;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,34 +11,55 @@ namespace BoxingRoundApp.Services.Workouts
     {
         private CancellationTokenSource _cts;
         private bool _isCanceled;
+        private readonly AudioManager _audioManager;
 
-        public async Task RunWorkout(List<RoundSettingsModel> rounds, Action<int> onTick, Action<string> onPhaseChanged)
+        public TimerServices(AudioManager audioManager)
+        {
+            _audioManager = audioManager;
+        }
+
+        public async Task RunWorkout(List<RoundSettingsModel> rounds, Action<int> onTick, Action<string> onPhaseChanged, Action onFinished)
         {
             _cts = new CancellationTokenSource();
 
-            foreach (var round in rounds)
+            try
             {
-                _cts.Token.ThrowIfCancellationRequested();
-
-                await TextToSpeech.Default.SpeakAsync($"Round {round.RoundNumber}");
-
-                await Task.Delay(1000);
-
-                await TextToSpeech.Default.SpeakAsync($"{round.RoundDescription}");
-
-                await Task.Delay(2000);
-
-                // await PlaySound("bell.mp3");
-                await StartCountdown(round.DurationSeconds, true, onTick, _cts.Token);
-
-                if (round != rounds.Last())
+                foreach (var round in rounds)
                 {
-                    await TextToSpeech.Default.SpeakAsync("Rest");
-                    await StartCountdown(round.RestSeconds, false, onTick, _cts.Token);
-                }
-            }
+                    _cts.Token.ThrowIfCancellationRequested();
 
-            await TextToSpeech.Default.SpeakAsync("Workout complete. Well done.");
+                    onPhaseChanged?.Invoke($"Round {round.RoundNumber}");
+                    await TextToSpeech.Default.SpeakAsync($"Round {round.RoundNumber}", cancelToken: _cts.Token);
+
+                    await Task.Delay(1000, _cts.Token);
+
+                    onPhaseChanged?.Invoke(round.RoundDescription);
+                    await TextToSpeech.Default.SpeakAsync($"{round.RoundDescription}", cancelToken: _cts.Token);
+
+                    await Task.Delay(2000, _cts.Token);
+
+                    _ = _audioManager.PlaySound("one_bell.mp3");
+                    await StartCountdown(round.DurationSeconds, true, onTick, _cts.Token);
+
+                    if (round != rounds.Last())
+                    {
+                        onPhaseChanged?.Invoke("Rest");
+                        await TextToSpeech.Default.SpeakAsync("Rest", cancelToken: _cts.Token);
+                        await StartCountdown(round.RestSeconds, false, onTick, _cts.Token);
+                    }
+                }
+
+                await TextToSpeech.Default.SpeakAsync("Workout complete. Well done.", cancelToken: _cts.Token);
+            }
+            catch (OperationCanceledException)
+            {
+                onPhaseChanged?.Invoke("Workout Stopped");
+            }
+            finally
+            {
+                onFinished?.Invoke();
+                _cts.Dispose();
+            }
         }
 
         public async Task StartCountdown(int durationSeconds, bool isWork, Action<int> onTick, CancellationToken token)
@@ -55,7 +77,7 @@ namespace BoxingRoundApp.Services.Workouts
                 if (isWork && i == 10)
                 {
                     // _ = means "Fire and forget" so the timer doesn't wait for the sound to finish
-                    //_ = PlaySound("tick_tick.mp3");
+                    _ = _audioManager.PlaySound("boxing_sticks.mp3");
                 }
 
                 // Voice logic: Rest countdown (5, 4, 3...)
@@ -68,7 +90,7 @@ namespace BoxingRoundApp.Services.Workouts
 
                 if (i == 0)
                 {
-                    //_ = PlaySound("bell.mp3");
+                    _ = _audioManager.PlaySound("three_bells.mp3");
                 }
 
                 // Wait 1 second, but allow the token to cancel the delay immediately
@@ -77,5 +99,7 @@ namespace BoxingRoundApp.Services.Workouts
         }
 
         public void Stop() => _cts?.Cancel();
+
+        
     }
 }
