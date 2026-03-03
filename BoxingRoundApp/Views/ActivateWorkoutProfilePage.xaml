@@ -92,7 +92,7 @@
                                     <RoundRectangle CornerRadius="5" />
                                 </Border.StrokeShape>
                                 <Label Text="{Binding RoundDescription}"
-                                       Padding="10"/>
+                                       Padding="10" />
 
                             </Border>
 

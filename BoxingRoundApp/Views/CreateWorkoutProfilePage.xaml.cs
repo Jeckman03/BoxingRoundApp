@@ -1,6 +1,7 @@
 using BoxingRoundApp.Models;
 using BoxingRoundApp.ViewModel;
 using CommunityToolkit.Maui.Extensions;
+using CommunityToolkit.Maui.Core;
 
 namespace BoxingRoundApp.Views;
 
@@ -33,20 +34,45 @@ public partial class CreateWorkoutProfilePage : ContentPage
 
     private async void OnEditComboClicked(object sender, EventArgs e)
     {
-        var popup = new ComboPickerPopup();
+        var round = (RoundSettingsModel)((VisualElement)sender).BindingContext;
+        var popup = new ComboPickerPopup(round.RoundDescription);
 
         var result = await this.ShowPopupAsync(popup);
 
-        // result is an object, so we convert it to string
-        if (result != null && !string.IsNullOrWhiteSpace(result.ToString()))
+        if (result == null) return;
+
+        if (result != null)
         {
-            string finalCombo = result.ToString();
+            string raw = result.ToString();
+            string cleanCombo = "";
 
-            var round = (RoundSettingsModel)((VisualElement)sender).BindingContext;
+            if (raw.Contains("WasDismissedByTappingOutsideOfPopup = True"))
+            {
+                // User clicked away - EXIT the method without updating the model
+                return;
+            }
 
-            // USE THE PROPERTY (Capital R), NOT THE FIELD (lowercase r)
-            // This triggers the "Hey UI, I changed!" event.
-            round.RoundDescription = finalCombo;
+            if (raw.Contains("Result ="))
+            {
+                // 1. Get everything after "Result = "
+                var afterResult = raw.Split(new[] { "Result =" }, StringSplitOptions.None)[1];
+
+                // 2. Find where the metadata starts (usually " , WasDismissed" or just ", Was")
+                // We split by the first occurrence of ", WasDismissed" to keep all your hits
+                var comboPart = afterResult.Split(new[] { ", WasDismissed" }, StringSplitOptions.None)[0];
+
+                cleanCombo = comboPart.Trim().TrimEnd('}');
+            }
+            else
+            {
+                cleanCombo = raw;
+            }
+
+            // Assign back to your Round model
+            if (sender is Button btn && btn.BindingContext is RoundSettingsModel roundSelected)
+            {
+                roundSelected.RoundDescription = cleanCombo;
+            }
         }
     }
 }

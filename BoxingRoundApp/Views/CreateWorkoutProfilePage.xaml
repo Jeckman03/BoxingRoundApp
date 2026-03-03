@@ -94,7 +94,10 @@
                                         <RoundRectangle CornerRadius="5" />
                                     </Border.StrokeShape>
                                     <Label Text="{Binding RoundDescription}" 
-                                           MinimumHeightRequest="40"/>
+                                           FontAttributes="Bold"
+                                           MinimumHeightRequest="40"
+                                           VerticalTextAlignment="Center"
+                                           Margin="10,5"/>
 
                                 </Border>
                             </VerticalStackLayout>

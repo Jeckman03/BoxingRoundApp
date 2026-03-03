@@ -6,9 +6,14 @@ public partial class ComboPickerPopup : Popup<string>
 {
     private List<string> _selectedHits = new();
 
-    public ComboPickerPopup()
+    public ComboPickerPopup(string existing)
     {
         InitializeComponent();
+        if (!string.IsNullOrEmpty(existing))
+        {
+            _selectedHits = existing.Split(new[] { ", " }, StringSplitOptions.None).ToList();
+            UpdatePills();
+        }
         LoadButtons();
     }
 
@@ -53,7 +58,7 @@ public partial class ComboPickerPopup : Popup<string>
     private async void OnSaveClicked(object sender, EventArgs e)
     {
         // Joining with a comma so your TTS sounds natural
-        string result = string.Join(", ", _selectedHits);
+        string result = string.Join(", ", _selectedHits).ToString();
         await CloseAsync(result);
     }
 }
