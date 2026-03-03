@@ -24,13 +24,25 @@ namespace BoxingRoundApp.ViewModel
         private int displayTime;
 
         [ObservableProperty]
-        private string currentPahse;
+        private string currentPhase;
 
         [ObservableProperty]
         private bool isWorkPhase;
 
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(VisualCombo))]
         private string currentCombo;
+
+        public string VisualCombo
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(CurrentCombo) || CurrentCombo == "Breathe...")
+                return CurrentCombo;
+
+                return CurrentCombo.Replace(" ", " - ");
+            }
+        }
 
         public Color TimerColor => (IsWorkPhase && DisplayTime <= 10) ? Colors.OrangeRed : Colors.White;
 
@@ -60,8 +72,22 @@ namespace BoxingRoundApp.ViewModel
                                             (time) => DisplayTime = time,
                                             (phase) => 
                                             {
-                                                CurrentPahse = phase;
-                                                IsWorkPhase = !phase.Contains("Rest");
+                                                if (phase.StartsWith("Round"))
+                                                {
+                                                    CurrentPhase = phase;
+                                                    IsWorkPhase = true;
+                                                }
+                                                else if (phase == "Rest")
+                                                {
+                                                    CurrentPhase = "Rest";
+                                                    CurrentCombo = "Breathe...";
+                                                    IsWorkPhase = false;
+                                                }
+                                                else
+                                                {
+                                                    CurrentCombo = phase;
+                                                    IsWorkPhase = true;
+                                                }
                                             },
                                             () => { });
         }

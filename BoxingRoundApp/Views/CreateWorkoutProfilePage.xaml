@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:BoxingRoundApp.ViewModel"
              x:Class="BoxingRoundApp.Views.CreateWorkoutProfilePage"
+             x:Name="ThisPage"
              Title="Create Workout Profile">
     <Grid RowDefinitions="Auto, Auto, *, Auto, Auto">
 
@@ -81,15 +82,23 @@
                                    Padding="5"/>
                         </HorizontalStackLayout>
 
-                            <Border Grid.Row="1"
-        Grid.ColumnSpan="3" >
-                                <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="5" />
-                                </Border.StrokeShape>
-                                <Entry Placeholder="Round Combo (e.g. Cross Jab/ 1 1 2)"
-                                       Text="{Binding RoundDescription}"/>
+                            <VerticalStackLayout Grid.Row="1"
+                                                 Grid.ColumnSpan="3">
+                                <Button Text="Add Combo"
+                                        HorizontalOptions="End"
+                                        Margin="5"
+                                        Clicked="OnEditComboClicked"/>
 
-                            </Border>
+                                <Border>
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="5" />
+                                    </Border.StrokeShape>
+                                    <Label Text="{Binding RoundDescription}" 
+                                           MinimumHeightRequest="40"/>
+
+                                </Border>
+                            </VerticalStackLayout>
+                            
 
                         </Grid>
                     </Border>

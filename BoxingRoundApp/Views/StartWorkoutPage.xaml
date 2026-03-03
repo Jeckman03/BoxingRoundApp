@@ -5,7 +5,7 @@
              x:Class="BoxingRoundApp.Views.StartWorkoutPage"
              Title="Workout in Progress">
 
-    <Grid RowDefinitions="*, 2*,*" Padding="20">
+    <Grid RowDefinitions="*, 2*, Auto, *" Padding="20">
         <Grid.Style>
             <Style TargetType="Grid">
                 <Setter Property="BackgroundColor" Value="#212121" />
@@ -41,14 +41,16 @@
                VerticalOptions="Center" />
 
         <Label Grid.Row="2"
-               Text="{Binding CurrentCombo}"
-               FontSize="24"
-               TextColor="White"
+               Text="{Binding VisualCombo}"
+               FontSize="32" 
+               FontAttributes="Bold"
+               TextColor="Yellow"
                HorizontalTextAlignment="Center"
                LineBreakMode="WordWrap"
+               Margin="20,10"
                VerticalOptions="Start" />
 
-        <Button Grid.Row="2"
+        <Button Grid.Row="3"
                 Text="STOP WORKOUT"
                 Command="{Binding StopCommand}"
                 BackgroundColor="White"

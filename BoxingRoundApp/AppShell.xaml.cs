@@ -8,10 +8,11 @@ namespace BoxingRoundApp
         {
             InitializeComponent();
 
-            Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
+            //Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
             Routing.RegisterRoute(nameof(CreateWorkoutProfilePage), typeof(CreateWorkoutProfilePage));
             Routing.RegisterRoute(nameof(ActivateWorkoutProfilePage), typeof (ActivateWorkoutProfilePage));
             Routing.RegisterRoute(nameof(StartWorkoutPage), typeof (StartWorkoutPage));
+            Routing.RegisterRoute(nameof(ComboPage), typeof(ComboPage));
         }
     }
 }

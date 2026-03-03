@@ -1,6 +1,7 @@
 ﻿using BoxingRoundApp.Models;
 using BoxingRoundApp.Services.Data;
 using BoxingRoundApp.Services.Workouts;
+using BoxingRoundApp.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
@@ -29,6 +30,9 @@ namespace BoxingRoundApp.ViewModel
 
         [ObservableProperty]
         private string source;
+
+        [ObservableProperty]
+        private string roundDescription;
 
         public int RoundCount { get; set; } = 0;
 
