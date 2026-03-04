@@ -11,6 +11,16 @@
                          Spacing="10" 
                          WidthRequest="350">
 
+        <HorizontalStackLayout Spacing="10">
+            <Label Text="Current Combo:" TextColor="White" FontAttributes="Bold" VerticalTextAlignment="Center" />
+            <Button Text="Clear" 
+                Clicked="OnClearClicked" 
+                FontSize="10" 
+                HeightRequest="30" 
+                BackgroundColor="Transparent" 
+                TextColor="Gray" />
+        </HorizontalStackLayout>
+
         <Label Text="Current Combo:" TextColor="White" FontAttributes="Bold" />
         <FlexLayout x:Name="PillContainer" Wrap="Wrap" Margin="0,5" />
 

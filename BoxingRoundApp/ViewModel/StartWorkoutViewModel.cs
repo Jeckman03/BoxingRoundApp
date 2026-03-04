@@ -33,6 +33,12 @@ namespace BoxingRoundApp.ViewModel
         [NotifyPropertyChangedFor(nameof(VisualCombo))]
         private string currentCombo;
 
+        [ObservableProperty]
+        private string _statusText = "READY?";
+
+        [ObservableProperty]
+        private string _pauseButtonText = "PAUSE";
+
         public string VisualCombo
         {
             get
@@ -40,7 +46,7 @@ namespace BoxingRoundApp.ViewModel
                 if (string.IsNullOrWhiteSpace(CurrentCombo) || CurrentCombo == "Breathe...")
                 return CurrentCombo;
 
-                return CurrentCombo.Replace(" ", " - ");
+                return CurrentCombo.Replace(", ", " - ");
             }
         }
 
@@ -89,7 +95,30 @@ namespace BoxingRoundApp.ViewModel
                                                     IsWorkPhase = true;
                                                 }
                                             },
-                                            () => { });
+                                            () => CurrentPhase = "FINISHED");
+        }
+
+        [RelayCommand]
+        private void TogglePause()
+        {
+            _timerServices.TogglePause();
+
+            PauseButtonText = _timerServices.IsPaused ? "RESUME" : "PAUSE";
+
+            if (_timerServices.IsPaused)
+                StatusText = "PAUSED";
+        }
+
+        [RelayCommand]
+        private async Task StopWorkout()
+        {
+            bool confirm = await Shell.Current.DisplayAlertAsync("Quit?", "Stop Boxing?", "Yes", "No");
+
+            if (confirm)
+            {
+                _timerServices.StopAndReset();
+                await Shell.Current.GoToAsync("..");
+            }
         }
     }
 }

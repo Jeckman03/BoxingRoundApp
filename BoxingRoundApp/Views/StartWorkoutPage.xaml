@@ -50,14 +50,30 @@
                Margin="20,10"
                VerticalOptions="Start" />
 
-        <Button Grid.Row="3"
-                Text="STOP WORKOUT"
+        <HorizontalStackLayout HorizontalOptions="Center" 
+                               Spacing="20"
+                               Grid.Row ="3">
+            <Button Text="{Binding PauseButtonText}"
+            Command="{Binding TogglePauseCommand}"
+            BackgroundColor="Orange"
+            WidthRequest="120"
+                    HeightRequest="100"/>
+
+            <Button Text="STOP"
+            Command="{Binding StopWorkoutCommand}"
+            BackgroundColor="Red"
+            WidthRequest="120"
+                    HeightRequest="100"/>
+        </HorizontalStackLayout>
+
+        <!--<Button Grid.Row="3"
+                Text="PAUSE WORKOUT"
                 Command="{Binding StopCommand}"
                 BackgroundColor="White"
                 TextColor="Black"
                 HeightRequest="60"
                 VerticalOptions="End"
-                Margin="0,0,0,20"/>
+                Margin="0,0,0,20"/>-->
 
     </Grid>
 </ContentPage>

@@ -12,6 +12,10 @@ namespace BoxingRoundApp.Services.Workouts
         private CancellationTokenSource _cts;
         private bool _isCanceled;
         private readonly AudioManager _audioManager;
+        public event Action<int> OnTimerTicked;
+        public event Action<string> OnStatusChanged;
+        private TaskCompletionSource<bool> _pauseTcs = new TaskCompletionSource<bool>();
+        public bool IsPaused { get; private set; }
 
         public TimerServices(AudioManager audioManager)
         {
@@ -70,6 +74,11 @@ namespace BoxingRoundApp.Services.Workouts
                 // Check if user exited the page or hit stop
                 token.ThrowIfCancellationRequested();
 
+                if (IsPaused)
+                {
+                    await _pauseTcs.Task;
+                }
+
                 // Update UI
                 onTick(i);
 
@@ -100,6 +109,33 @@ namespace BoxingRoundApp.Services.Workouts
 
         public void Stop() => _cts?.Cancel();
 
-        
+        public void TogglePause()
+        {
+            IsPaused = !IsPaused;
+
+            if (IsPaused)
+            {
+                _pauseTcs = new TaskCompletionSource<bool>();
+                OnStatusChanged?.Invoke("PAUSED");
+            }
+            else
+            {
+                _pauseTcs.TrySetResult(true);
+                OnStatusChanged?.Invoke("WORK!");
+            }
+        }
+
+        public void StopAndReset()
+        {
+            _cts?.Cancel();
+
+            if (IsPaused)
+            {
+                _pauseTcs.TrySetResult(true);
+            }
+
+            IsPaused = false;
+            OnStatusChanged?.Invoke("STOPPED");
+        }
     }
 }

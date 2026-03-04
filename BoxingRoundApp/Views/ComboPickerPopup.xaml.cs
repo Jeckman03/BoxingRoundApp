@@ -40,25 +40,59 @@ public partial class ComboPickerPopup : Popup<string>
     private void UpdatePills()
     {
         PillContainer.Children.Clear();
-        foreach (var hit in _selectedHits)
+        for (int i = 0; i < _selectedHits.Count; i++)
         {
+            var index = i; // Local copy for the closure
+            var hit = _selectedHits[i];
+
+            var pillLabel = new Label
+            {
+                Text = $"{hit}  ✕", // Adding an 'X' icon for visual cue
+                TextColor = Colors.White,
+                VerticalTextAlignment = TextAlignment.Center
+            };
+
             var pill = new Frame
             {
                 BackgroundColor = Colors.DimGray,
                 CornerRadius = 15,
-                Padding = new Thickness(10, 5),
-                Margin = new Thickness(2),
+                Padding = new Thickness(12, 5),
+                Margin = new Thickness(4),
                 BorderColor = Colors.Transparent,
-                Content = new Label { Text = hit, TextColor = Colors.White }
+                Content = pillLabel
             };
+
+            // Add the Tap Gesture to remove this specific hit
+            var tapGesture = new TapGestureRecognizer();
+            tapGesture.Tapped += (s, e) =>
+            {
+                _selectedHits.RemoveAt(index);
+                UpdatePills(); // Refresh the UI to show the updated list
+            };
+
+            pill.GestureRecognizers.Add(tapGesture);
             PillContainer.Children.Add(pill);
         }
     }
 
     private async void OnSaveClicked(object sender, EventArgs e)
     {
-        // Joining with a comma so your TTS sounds natural
-        string result = string.Join(", ", _selectedHits).ToString();
-        await CloseAsync(result);
+        if (_selectedHits.Count == 0)
+        {
+            this.CloseAsync("None");
+        }
+        else
+        {
+            // Joining with a comma so your TTS sounds natural
+            string result = string.Join(", ", _selectedHits).ToString();
+            await CloseAsync(result);
+        }
+        
+    }
+
+    private void OnClearClicked(object sender, EventArgs e)
+    {
+        _selectedHits.Clear();
+        UpdatePills();
     }
 }
