@@ -28,7 +28,7 @@
 		<MauiXamlInflator>SourceGen</MauiXamlInflator>
 
 		<!-- Display name -->
-		<ApplicationTitle>BoxingRoundApp</ApplicationTitle>
+		<ApplicationTitle>Boxing Round App</ApplicationTitle>
 
 		<!-- App Identifier -->
 		<ApplicationId>com.companyname.boxingroundapp</ApplicationId>
@@ -49,10 +49,10 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#121212" />
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" Color="#121212" />
 
 		<!-- Splash Screen -->
-    <MauiSplashScreen Include="Resources\Splash\boxing_round.svg" Color="#121212" BaseSize="108,108" TintColor="#E11D48" />
+    <MauiSplashScreen Include="Resources\Splash\boxing_splash.svg" Color="#121212" Resize="false" BaseSize="400,400" TintColor="#E11D48" />
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
 		<MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
@@ -88,9 +88,6 @@
 
 	<ItemGroup>
 	  <MauiXaml Update="Views\ActivateWorkoutProfilePage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\ComboPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\ComboPickerPopup.xaml">

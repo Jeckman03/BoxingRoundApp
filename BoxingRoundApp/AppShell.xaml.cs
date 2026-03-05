@@ -12,7 +12,6 @@ namespace BoxingRoundApp
             Routing.RegisterRoute(nameof(CreateWorkoutProfilePage), typeof(CreateWorkoutProfilePage));
             Routing.RegisterRoute(nameof(ActivateWorkoutProfilePage), typeof (ActivateWorkoutProfilePage));
             Routing.RegisterRoute(nameof(StartWorkoutPage), typeof (StartWorkoutPage));
-            Routing.RegisterRoute(nameof(ComboPage), typeof(ComboPage));
         }
     }
 }

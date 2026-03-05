@@ -28,14 +28,12 @@ namespace BoxingRoundApp
             builder.Services.AddTransient<CreateWorkoutProfilePage>();
             builder.Services.AddTransient<ActivateWorkoutProfilePage>();
             builder.Services.AddTransient<StartWorkoutPage>();
-            builder.Services.AddTransient<ComboPage>();
 
             // ViewModels
             builder.Services.AddTransient<MainPageViewModel>();
             builder.Services.AddTransient<CreateWorkoutProfileViewModel>();
             builder.Services.AddTransient<ActivateWorkoutProfileViewModel>();
             builder.Services.AddTransient<StartWorkoutViewModel>();
-            builder.Services.AddTransient<ComboViewModel>();
 
             // Services
             builder.Services.AddSingleton<BoxingDatabase>();
