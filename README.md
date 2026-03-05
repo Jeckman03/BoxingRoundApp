@@ -83,3 +83,10 @@ The app utilizes a centralized `TimerService` to manage the countdown logic. Thi
 ## 📝 License
 
 Distributed under the MIT License. See `LICENSE` for more information.
+
+👨‍💻 Author
+Jeff Eckman
+
+LinkedIn: [www.linkedin.com/in/jeff-eckman-b514a111]
+
+GitHub: [(https://github.com/Jeckman03)]
