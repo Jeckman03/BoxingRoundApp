@@ -31,9 +31,6 @@ namespace BoxingRoundApp.ViewModel
         [ObservableProperty]
         private string source;
 
-        [ObservableProperty]
-        private string roundDescription;
-
         public int RoundCount { get; set; } = 0;
 
         private readonly BoxingDatabase _boxingDatabase;
@@ -61,6 +58,7 @@ namespace BoxingRoundApp.ViewModel
                     RoundCount = Rounds.Count;
                     WorkoutName = CurrentWorkout.Name;
                 }
+
             }
             catch (Exception ex)
             {

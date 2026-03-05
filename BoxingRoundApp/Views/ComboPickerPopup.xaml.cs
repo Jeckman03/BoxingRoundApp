@@ -27,6 +27,7 @@ public partial class ComboPickerPopup : Popup<string>
                 Text = hit,
                 Margin = 5,
                 WidthRequest = 100,
+                TextColor = Color.FromArgb("#ffffff"),
                 BackgroundColor = Color.FromArgb("#333333")
             };
             btn.Clicked += (s, e) => {

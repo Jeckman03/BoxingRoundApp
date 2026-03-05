@@ -78,10 +78,11 @@ namespace BoxingRoundApp.ViewModel
                                             (time) => DisplayTime = time,
                                             (phase) => 
                                             {
-                                                if (phase.StartsWith("Round"))
+                                               if (phase?.StartsWith("Round") == true)
                                                 {
                                                     CurrentPhase = phase;
                                                     IsWorkPhase = true;
+                                                    CurrentCombo = "Box!";
                                                 }
                                                 else if (phase == "Rest")
                                                 {
@@ -89,7 +90,7 @@ namespace BoxingRoundApp.ViewModel
                                                     CurrentCombo = "Breathe...";
                                                     IsWorkPhase = false;
                                                 }
-                                                else
+                                               else if (!string.IsNullOrEmpty(phase))
                                                 {
                                                     CurrentCombo = phase;
                                                     IsWorkPhase = true;

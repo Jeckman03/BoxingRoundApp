@@ -50,6 +50,25 @@ namespace BoxingRoundApp.ViewModel
         }
 
         [RelayCommand]
+        private async Task DeleteProfile(WorkoutProfileModel profile)
+        {
+            // A quick haptic pulse here would feel great
+            HapticFeedback.Default.Perform(HapticFeedbackType.LongPress);
+
+            bool confirm = await Shell.Current.DisplayAlertAsync(
+                "Delete Routine?",
+                $"Are you sure you want to remove {profile.Name}?",
+                "DELETE",
+                "CANCEL");
+
+            if (confirm)
+            {
+                WorkoutProfiles.Remove(profile);
+                await _boxingDatabase.DeleteProfileAsync(profile.Id);
+            }
+        }
+
+        [RelayCommand]
         private async Task ProfileSelection(WorkoutProfileModel SelectedProfile)
         {
             try
@@ -71,6 +90,8 @@ namespace BoxingRoundApp.ViewModel
         [RelayCommand]
         private async Task ShowOptions(WorkoutProfileModel profile)
         {
+            
+
             try
             {
                 IsBusy = true;
@@ -83,14 +104,19 @@ namespace BoxingRoundApp.ViewModel
 
                 int profileId = profile.Id;
 
-                var result = await Shell.Current.DisplayActionSheetAsync("Worlout Profile Options", "Cancel", null, "Edit", "Delete");
+                string action = await Shell.Current.DisplayActionSheetAsync(
+                                $"Options: {profile.Name}",
+                                "Cancel",
+                                "DELETE", // Use CAPS for that aggressive sports feel
+                                "Edit Routine",
+                                "Reset Stats");
 
-                if (result == "Edit")
+                if (action == "Edit Routine")
                 {
                     // Go to the CreateWorkoutPage or create a new EditWorkoutPage
                     await Shell.Current.GoToAsync($"{nameof(CreateWorkoutProfilePage)}?ProfileId={profile.Id}");
                 }
-                else if (result == "Delete")
+                else if (action == "DELETE")
                 {
                     bool confirm = await Shell.Current.DisplayAlertAsync("Delete Profile", $"Are you sure you want to delete {profile.Name}?", "Yes", "No");
 

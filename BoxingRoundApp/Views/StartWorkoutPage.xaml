@@ -3,78 +3,150 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="BoxingRoundApp.Views.StartWorkoutPage"
+             BackgroundColor="#121212"
              Title="Workout in Progress">
 
-    <Grid RowDefinitions="*, 2*, Auto, *" Padding="20">
-        <Grid.Style>
-            <Style TargetType="Grid">
-                <Setter Property="BackgroundColor" Value="#212121" />
+    <Border Margin="10,5" Padding="0">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="20" />
+        </Border.StrokeShape>
+
+        <Border.Style>
+            <Style TargetType="Border">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#2C2C2C" Offset="0.1" />
+                            <GradientStop Color="#1E1E1E" Offset="1.0" />
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
                 <Style.Triggers>
-                    <DataTrigger TargetType="Grid" Binding="{Binding CurrentPhase}" Value="Rest">
-                        <Setter Property="BackgroundColor" Value="#2E7D32" />
+                    <DataTrigger TargetType="Border" Binding="{Binding IsWorkPhase}" Value="True">
+                        <Setter Property="Background" Value="#1B5E20" />
+                        <Setter Property="Stroke" Value="#4CAF50" />
+                        <Setter Property="StrokeThickness" Value="2" />
                     </DataTrigger>
-                    <DataTrigger TargetType="Grid" Binding="{Binding IsWorkPhase}" Value="True">
-                        <Setter Property="BackgroundColor" Value="#C62828" />
+                    <DataTrigger TargetType="Border" Binding="{Binding CurrentPhase}" Value="Rest">
+                        <Setter Property="Background" Value="#37474F" />
+                        <Setter Property="Stroke" Value="#90A4AE" />
                     </DataTrigger>
                 </Style.Triggers>
             </Style>
-        </Grid.Style>
+        </Border.Style>
 
-        <toolkit:MediaElement x:Name="HiddenPlayer"
-          ShouldAutoPlay="False"
-          IsVisible="False" />
-    
-        <Label Grid.Row="0"
-               Text="{Binding CurrentPhase}"
-               FontSize="32"
+        <Grid RowDefinitions="Auto, *, Auto, Auto" Padding="20">
+
+            <toolkit:MediaElement x:Name="HiddenPlayer" ShouldAutoPlay="False" IsVisible="False" />
+
+            <Label Grid.Row="0"
+               Text="{Binding CurrentPhase, Converter={StaticResource UpperCaseConverter}}"
+               FontSize="28"
                FontAttributes="Bold"
                TextColor="White"
                HorizontalOptions="Center"
-               VerticalOptions="Center" />
+               CharacterSpacing="2" />
 
-        <Label Grid.Row="1"
-               Text="{Binding FormattedTime}"
-               TextColor="{Binding TimerColor}"
-               FontSize="150"
-               FontAttributes="Bold"
-               HorizontalOptions="Center"
-               VerticalOptions="Center" />
+            <VerticalStackLayout Grid.Row="1" VerticalOptions="Center">
+                <Label Text="{Binding FormattedTime}"
+                   TextColor="{Binding TimerColor}"
+                   FontSize="140"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center">
+                    <Label.Shadow>
+                        <Shadow Brush="Black" Offset="5,5" Radius="10" Opacity="0.5" />
+                    </Label.Shadow>
+                </Label>
+            </VerticalStackLayout>
 
-        <Label Grid.Row="2"
-               Text="{Binding VisualCombo}"
-               FontSize="32" 
-               FontAttributes="Bold"
-               TextColor="Yellow"
-               HorizontalTextAlignment="Center"
-               LineBreakMode="WordWrap"
-               Margin="20,10"
-               VerticalOptions="Start" />
+            <Border Grid.Row="2" 
+                BackgroundColor="#33000000" 
+                Padding="15,10" 
+                Margin="0,0,0,20"
+                HorizontalOptions="Center">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10" />
+                </Border.StrokeShape>
+                <Label Text="{Binding VisualCombo}"
+                   FontSize="26" 
+                   FontAttributes="Bold"
+                   TextColor="#FACC15" 
+                   HorizontalTextAlignment="Center"
+                   LineBreakMode="WordWrap" />
+            </Border>
 
-        <HorizontalStackLayout HorizontalOptions="Center" 
-                               Spacing="20"
-                               Grid.Row ="3">
-            <Button Text="{Binding PauseButtonText}"
+            <HorizontalStackLayout Grid.Row="3" 
+                       HorizontalOptions="Center" 
+                       Spacing="20"
+                       Margin="0,10,0,20">
+
+                <Button x:Name="PauseButton"
+            Text="{Binding PauseButtonText}"
             Command="{Binding TogglePauseCommand}"
-            BackgroundColor="Orange"
-            WidthRequest="120"
-                    HeightRequest="100"/>
+            TextColor="White"
+            FontAttributes="Bold"
+            FontSize="18"
+            CharacterSpacing="1"
+            CornerRadius="12"
+            WidthRequest="150"
+            HeightRequest="75"
+            BorderWidth="2">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="BackgroundColor" Value="#EF6C00" />
+                            <Setter Property="BorderColor" Value="#FFB74D" />
+                            <Style.Triggers>
+                                <DataTrigger TargetType="Button" Binding="{Binding IsPaused}" Value="True">
+                                    <Setter Property="BackgroundColor" Value="#2E7D32" />
+                                    <Setter Property="BorderColor" Value="#81C784" />
+                                    <Setter Property="Text" Value="RESUME" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Button.Shadow>
+                        <Shadow Brush="Black" Offset="0,4" Opacity="0.6" Radius="5" />
+                    </Button.Shadow>
+                </Button>
 
-            <Button Text="STOP"
+                <Button Text="STOP"
             Command="{Binding StopWorkoutCommand}"
-            BackgroundColor="Red"
-            WidthRequest="120"
-                    HeightRequest="100"/>
-        </HorizontalStackLayout>
+            BackgroundColor="#B71C1C"
+            TextColor="White"
+            FontAttributes="Bold"
+            FontSize="18"
+            CharacterSpacing="1"
+            CornerRadius="12"
+            WidthRequest="150"
+            HeightRequest="75"
+            BorderColor="#E57373"
+            BorderWidth="2">
+                    <Button.Shadow>
+                        <Shadow Brush="Black" Offset="0,4" Opacity="0.6" Radius="5" />
+                    </Button.Shadow>
+                </Button>
 
-        <!--<Button Grid.Row="3"
-                Text="PAUSE WORKOUT"
-                Command="{Binding StopCommand}"
-                BackgroundColor="White"
-                TextColor="Black"
-                HeightRequest="60"
-                VerticalOptions="End"
-                Margin="0,0,0,20"/>-->
+            </HorizontalStackLayout>
+        </Grid>
+    </Border>
 
-    </Grid>
+    <ContentPage.Resources>
+        <Style TargetType="Button">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="Scale" Value="0.95" />
+                                <Setter Property="Opacity" Value="0.8" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
 </ContentPage>
 

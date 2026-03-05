@@ -8,83 +8,132 @@
              x:Name="ThisPage"
              Title="Boxing Round App">
 
-    
-    <Grid RowDefinitions="auto, *"
-          ColumnDefinitions="*, auto">
 
-        <ActivityIndicator />
-
+    <Grid RowDefinitions="Auto, *"
+      ColumnDefinitions="*, Auto"
+      BackgroundColor="#121212">
         <Label Grid.Row="0"
-               Grid.Column="0"
-               Text="Routines"
-               FontAttributes="Bold"
-               FontSize="Large"
-               Margin="10"/>
+           Grid.Column="0"
+           Text="ROUTINES"
+           TextColor="#E11D48" 
+           FontAttributes="Bold"
+           FontSize="28"
+           CharacterSpacing="2"
+           Margin="20,15"/>
 
         <Button Grid.Row="0"
-                Grid.Column="1"
-                Text="Create New Routine"
-                Command="{Binding CreateNewProfileCommand}"/>
+            Grid.Column="1"
+            Text="+ NEW"
+            Command="{Binding CreateNewProfileCommand}"
+            BackgroundColor="#2E7D32"
+            TextColor="White"
+            FontAttributes="Bold"
+            CornerRadius="8"
+            HeightRequest="45"
+            Margin="10"
+            Padding="15,0"/>
 
         <CollectionView Grid.Row="1"
-                        Grid.ColumnSpan="2"
-                        ItemsSource="{Binding WorkoutProfiles}"
-                        Margin="10"
-                        SelectionMode="Single">
+                    Grid.ColumnSpan="2"
+                    ItemsSource="{Binding WorkoutProfiles}"
+                    Margin="10,0"
+                    SelectionMode="None">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Border Margin="0,5,0,0"
-                            x:Name="ItemBorder">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="10" />
-                        </Border.StrokeShape>
+                    <SwipeView Threshold="100">
+                        <SwipeView.RightItems>
+                            <SwipeItems Mode="Execute">
+                                <SwipeItem Text="DELETE"
+                               BackgroundColor="#E11D48"
+                               IconImageSource="delete_icon.png"
+                               Command="{Binding BindingContext.DeleteProfileCommand, Source={x:Reference ThisPage}}"
+                               CommandParameter="{Binding .}" />
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+                        <Border Margin="10,6"
+                        Padding="15"
+                        BackgroundColor="#1E1E1E"
+                        Stroke="#333333"
+                        StrokeThickness="1"
+                        x:Name="ItemBorder">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12" />
+                            </Border.StrokeShape>
+                            <Border.Shadow>
+                                <Shadow Brush="Black" Offset="4,4" Opacity="0.5" Radius="8" />
+                            </Border.Shadow>
 
-                        <Border.Behaviors>
-                            <toolkit:TouchBehavior 
-                                Command="{Binding BindingContext.ProfileSelectionCommand, Source={x:Reference ThisPage}}"
-                                CommandParameter="{Binding BindingContext, Source={x:Reference ItemBorder}}"
-                                
-                                LongPressDuration="750"
-                                LongPressCommand="{Binding BindingContext.ShowOptionsCommand, Source={x:Reference ThisPage}}"
-                                LongPressCommandParameter="{Binding BindingContext, Source={x:Reference ItemBorder}}"
-                                
-                                DefaultAnimationDuration="250"
-                                PressedOpacity="0.6"/>
-                        </Border.Behaviors>
+                            <Border.Behaviors>
+                                <toolkit:TouchBehavior 
+                                    Command="{Binding BindingContext.ProfileSelectionCommand, Source={x:Reference ThisPage}}"
+                                    CommandParameter="{Binding BindingContext, Source={x:Reference ItemBorder}}"
+                                    LongPressDuration="750"
+                                    LongPressCommand="{Binding BindingContext.ShowOptionsCommand, Source={x:Reference ThisPage}}"
+                                    LongPressCommandParameter="{Binding BindingContext, Source={x:Reference ItemBorder}}"
+                                    DefaultAnimationDuration="250"
+                                    PressedOpacity="0.6"/>
+                            </Border.Behaviors>
 
-                        <Grid RowDefinitions="*, *"
-                              ColumnDefinitions="*, *">
-                            <HorizontalStackLayout Grid.Column="0"
-                                                   Grid.Row="0"
-                                                   Padding="10">
-                                <Label FontAttributes="Bold"
-                                       FontSize="Large"
-                                       Text="{Binding Name}" />
-                            </HorizontalStackLayout>
+                            <Grid RowDefinitions="Auto, Auto"
+                          ColumnDefinitions="*, Auto">
 
-                            <HorizontalStackLayout Grid.Column="1"
-                                                   Grid.Row="0"
-                                                   Padding="10"
-                                                   HorizontalOptions="End">
-                                <Label Text="Total Time: " />
-                                <Label Text="{Binding TotalTime}" />
-                            </HorizontalStackLayout>
+                                <Label Grid.Row="0"
+                               Grid.Column="0"
+                               Text="{Binding Name}"
+                               FontSize="22"
+                               FontAttributes="Bold"
+                               TextColor="White"
+                               VerticalOptions="Center" />
 
-                            <HorizontalStackLayout Grid.Row="1"
-                                                   Grid.Column="0"
-                                                   Padding="10">
-                                <Label Text="Rounds: " />
-                                <Label Text="{Binding Rounds}"
-                                       FontAttributes="Bold"/>
-                            </HorizontalStackLayout>
+                                <HorizontalStackLayout Grid.Row="0"
+                                             Grid.Column="1"
+                                             VerticalOptions="Center">
+                                    <Label Text="⏱ " TextColor="#FACC15" />
+                                    <Label Text="{Binding TotalTime}"
+                                   TextColor="#FACC15"
+                                   FontAttributes="Bold"
+                                   FontSize="14"/>
+                                </HorizontalStackLayout>
 
+                                <HorizontalStackLayout Grid.Row="1"
+                                             Grid.Column="0"
+                                             Margin="0,8,0,0"
+                                             Spacing="5">
+                                    <Label Text="ROUNDS:" 
+                                   TextColor="Gray" 
+                                   FontSize="12" 
+                                   FontAttributes="Bold"
+                                   VerticalTextAlignment="Center"/>
+                                    <Label Text="{Binding Rounds}"
+                                   TextColor="White"
+                                   FontSize="14"
+                                   FontAttributes="Bold"
+                                   VerticalTextAlignment="Center"/>
+                                </HorizontalStackLayout>
 
+                                <Label Grid.Row="1" 
+                               Grid.Column="1" 
+                               Text="➔" 
+                               TextColor="#E11D48" 
+                               FontSize="20" 
+                               HorizontalOptions="End" />
 
-                        </Grid>
-                    </Border>
+                            </Grid>
+                        </Border>
+                    </SwipeView>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+
+        <ActivityIndicator IsRunning="{Binding IsLoading}"
+                       IsVisible="{Binding IsLoading}"
+                       Color="#E11D48"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       Grid.RowSpan="2"
+                       Grid.ColumnSpan="2" />
     </Grid>
 
 </ContentPage>
+
+

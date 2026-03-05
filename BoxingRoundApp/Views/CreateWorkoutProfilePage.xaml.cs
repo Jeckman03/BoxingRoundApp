@@ -8,6 +8,7 @@ namespace BoxingRoundApp.Views;
 public partial class CreateWorkoutProfilePage : ContentPage
 {
     private readonly CreateWorkoutProfileViewModel _viewModel;
+    private bool _isFirstLoad = true;
 
 	public CreateWorkoutProfilePage(CreateWorkoutProfileViewModel createWorkoutProfileViewModel)
 	{
@@ -29,7 +30,12 @@ public partial class CreateWorkoutProfilePage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        await _viewModel.LoadProfileToEditAsync();
+
+        if (_isFirstLoad)
+        {
+            await _viewModel.LoadProfileToEditAsync();
+            _isFirstLoad = false;
+        }
     }
 
     private async void OnEditComboClicked(object sender, EventArgs e)
@@ -72,6 +78,9 @@ public partial class CreateWorkoutProfilePage : ContentPage
             if (sender is Button btn && btn.BindingContext is RoundSettingsModel roundSelected)
             {
                 roundSelected.RoundDescription = cleanCombo;
+
+                btn.BindingContext = null;
+                btn.BindingContext = round;
             }
         }
     }

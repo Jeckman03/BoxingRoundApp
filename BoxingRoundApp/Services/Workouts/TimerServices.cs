@@ -37,8 +37,11 @@ namespace BoxingRoundApp.Services.Workouts
 
                     await Task.Delay(1000, _cts.Token);
 
-                    onPhaseChanged?.Invoke(round.RoundDescription);
-                    await TextToSpeech.Default.SpeakAsync($"{round.RoundDescription}", cancelToken: _cts.Token);
+                   if (!string.IsNullOrEmpty(round.RoundDescription))
+                   {
+                       onPhaseChanged?.Invoke(round.RoundDescription);
+                       await TextToSpeech.Default.SpeakAsync($"{round.RoundDescription}", cancelToken: _cts.Token);
+                   }
 
                     await Task.Delay(2000, _cts.Token);
 
@@ -107,7 +110,17 @@ namespace BoxingRoundApp.Services.Workouts
             }
         }
 
-        public void Stop() => _cts?.Cancel();
+        public void Stop()
+        {
+            try
+            {
+                _cts?.Cancel();
+            }
+            catch (ObjectDisposedException)
+            {
+
+            }
+        }
 
         public void TogglePause()
         {
@@ -127,7 +140,15 @@ namespace BoxingRoundApp.Services.Workouts
 
         public void StopAndReset()
         {
-            _cts?.Cancel();
+            try
+            {
+                _cts?.Cancel();
+
+            }
+            catch (ObjectDisposedException)
+            {
+
+            }
 
             if (IsPaused)
             {

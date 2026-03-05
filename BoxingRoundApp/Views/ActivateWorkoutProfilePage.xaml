@@ -3,114 +3,101 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:BoxingRoundApp.ViewModel"
              x:Class="BoxingRoundApp.Views.ActivateWorkoutProfilePage"
-             Title="ActivateWorkoutProfilePage">
-    
-    <Grid RowDefinitions="Auto, Auto, *, Auto, Auto">
+             BackgroundColor="#121212"
+             Title="Ready to Work?">
 
-        <ActivityIndicator />
+    <Grid RowDefinitions="Auto, Auto, *, Auto" Padding="15">
 
-        <HorizontalStackLayout Grid.Row="0" 
-                               VerticalOptions="Center"
-                               Margin="10">
-            <Label Text="Duration: "/>
-            <Label Text="{Binding Profile.TotalTime}"/>
-        </HorizontalStackLayout>
-        
-        <Button Text="Edit"
-                Margin="10"
-                 HorizontalOptions="End"
-                 Command="{Binding EditRoundsCommand}" />
+        <Grid Grid.Row="0" ColumnDefinitions="*, Auto" Margin="0,0,0,10">
+            <HorizontalStackLayout Grid.Column="0" VerticalOptions="Center" Spacing="5">
+                <Label Text="TOTAL TIME:" FontSize="10" TextColor="Gray" FontAttributes="Bold" VerticalOptions="Center"/>
+                <Label Text="{Binding Profile.TotalTime}" TextColor="#FACC15" FontAttributes="Bold" FontSize="18" VerticalOptions="Center"/>
+            </HorizontalStackLayout>
 
-        
+            <Button Grid.Column="1"
+                    Text="EDIT"
+                    Command="{Binding EditRoundsCommand}"
+                    BackgroundColor="Transparent"
+                    TextColor="#E11D48"
+                    FontAttributes="Bold"
+                    FontSize="12"
+                    BorderWidth="1"
+                    BorderColor="#E11D48"
+                    HeightRequest="40"
+                    Padding="15,0"
+                    CornerRadius="8"/>
+        </Grid>
 
-        <Border Margin="10" Grid.Row="1">
+        <Border Grid.Row="1" 
+                Margin="0,10" 
+                Padding="20" 
+                BackgroundColor="#1E1E1E" 
+                Stroke="#333333" 
+                StrokeThickness="1">
             <Border.StrokeShape>
-                <RoundRectangle CornerRadius="5" />
+                <RoundRectangle CornerRadius="12" />
             </Border.StrokeShape>
-
-            <Label Text="{Binding Profile.Name}"
-                   Margin="10"
+            <Label Text="{Binding Profile.Name, Converter={StaticResource UpperCaseConverter}}"
+                   TextColor="White"
+                   FontSize="24"
                    FontAttributes="Bold"
-                   HorizontalTextAlignment="Center"/>
+                   HorizontalTextAlignment="Center"
+                   CharacterSpacing="2"/>
         </Border>
 
-        <CollectionView ItemsSource="{Binding Rounds}" Grid.Row="2">
+        <CollectionView ItemsSource="{Binding Rounds}" Grid.Row="2" Margin="0,10">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Border Margin="5">
+                    <Border Margin="0,5" Padding="15" BackgroundColor="#1E1E1E" Stroke="#222222">
                         <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="5" />
+                            <RoundRectangle CornerRadius="12" />
                         </Border.StrokeShape>
 
-                        <Grid ColumnDefinitions="*, Auto, *" RowDefinitions="*, *" Margin="10">
-
-
-                            <HorizontalStackLayout Grid.Column="0" Grid.Row="0" Margin="0,0,0,10">
-                                <Label Text="Round: "
-                                   VerticalTextAlignment="Center"
-                                   Padding="5"/>
-                                <Label Text="{Binding RoundNumber}"
-                                   FontAttributes="Bold"
-                                   VerticalTextAlignment="Center"/>
-                            </HorizontalStackLayout>
-
-                            <HorizontalStackLayout Grid.Column="1" Grid.Row="0" Margin="0,0,0,10">
-                                <Label Text="Duration: "
-                                       VerticalTextAlignment="Center" />
-                                <Border>
-                                    <Border.StrokeShape>
-                                        <RoundRectangle CornerRadius="5" />
-                                    </Border.StrokeShape>
-                                    <Label HorizontalTextAlignment="Center"
-                                           Text="{Binding DurationSeconds}"
-                                           Margin="10"
-                                           Padding="10,0"/>
-                                </Border>
-                                <Label Text="sec"
-                                       VerticalTextAlignment="Center"
-                                       Padding="5"/>
-                            </HorizontalStackLayout>
-
-                            <HorizontalStackLayout Grid.Column="2" Grid.Row="0" Margin="0,0,0,10" HorizontalOptions="End">
-                                <Border>
-                                    <Border.StrokeShape>
-                                        <RoundRectangle CornerRadius="5" />
-                                    </Border.StrokeShape>
-                                    <Label HorizontalTextAlignment="Center"
-                                           Text="{Binding RestSeconds}"
-                                           Margin="10"
-                                           Padding="10,0"/>
-                                </Border>
-                                <Label Text="Rest"
-                               VerticalTextAlignment="Center"
-                               Padding="5"/>
-                            </HorizontalStackLayout>
-
-                            <Border Grid.Row="1"
-                                    Grid.ColumnSpan="3">
+                        <Grid ColumnDefinitions="40, *, Auto" RowDefinitions="Auto, Auto" RowSpacing="10">
+                            <Border Grid.Column="0" Grid.Row="0" BackgroundColor="#333333" WidthRequest="30" HeightRequest="30">
                                 <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="5" />
+                                    <RoundRectangle CornerRadius="15" />
                                 </Border.StrokeShape>
-                                <Label Text="{Binding RoundDescription}"
-                                       Padding="10" />
-
+                                <Label Text="{Binding RoundNumber}" TextColor="White" FontSize="12" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
                             </Border>
 
+                            <HorizontalStackLayout Grid.Column="1" Grid.Row="0" Margin="10,0" Spacing="10" VerticalOptions="Center">
+                                <Label Text="{Binding DurationSeconds, StringFormat='{0}s WORK'}" TextColor="White" FontSize="14" FontAttributes="Bold" />
+                                <Label Text="|" TextColor="#333333" />
+                                <Label Text="{Binding RestSeconds, StringFormat='{0}s REST'}" TextColor="Gray" FontSize="14" />
+                            </HorizontalStackLayout>
+
+                            <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" BackgroundColor="#121212" Padding="10">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="8" />
+                                </Border.StrokeShape>
+                                <Label Text="{Binding RoundDescription}" 
+                                       TextColor="#FACC15" 
+                                       FontSize="14" 
+                                       FontAttributes="Italic"
+                                       LineBreakMode="WordWrap"/>
+                            </Border>
                         </Grid>
                     </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <Button HorizontalOptions="Center"
-                FontAttributes="Bold"
-                Margin="30"
-                Grid.Row="4"
-                Text="START"
-                CornerRadius="90"
-                HeightRequest="80"
-                WidthRequest="80"
-                Command="{Binding StartWorkoutCommand}"/>
+        <VerticalStackLayout Grid.Row="3" HorizontalOptions="Center" Margin="0,10,0,20">
+            <Button Text="START"
+                     Command="{Binding StartWorkoutCommand}"
+                     BackgroundColor="#E11D48"
+                     TextColor="White"
+                     FontAttributes="Bold"
+                     FontSize="24"
+                     HeightRequest="120"
+                     WidthRequest="120"
+                     CornerRadius="50">
+                <Button.Shadow>
+                    <Shadow Brush="#E11D48" Offset="0,0" Radius="15" Opacity="0.6" />
+                </Button.Shadow>
+            </Button>
+        </VerticalStackLayout>
 
     </Grid>
 </ContentPage>

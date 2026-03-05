@@ -5,6 +5,12 @@
 
     <!-- Note: For Android please see also Platforms\Android\Resources\values\colors.xml -->
 
+    <Color x:Key="GymBlack">#121212</Color>
+    <Color x:Key="GymDarkGray">#1E1E1E</Color>
+    <Color x:Key="BoxingRed">#E11D48</Color>
+    <Color x:Key="BoxingGold">#FACC15</Color>
+    <Color x:Key="OffWhite">#F8FAFC</Color>
+
     <Color x:Key="Primary">#512BD4</Color>
     <Color x:Key="PrimaryDark">#ac99ea</Color>
     <Color x:Key="PrimaryDarkText">#242424</Color>

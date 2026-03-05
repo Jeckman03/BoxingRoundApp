@@ -11,7 +11,7 @@ namespace BoxingRoundApp.Models
         [Indexed]
         public int WorkoutProfileId { get; set; }
         [ObservableProperty]
-        public string? roundDescription;
+        private string? roundDescription;
         public int RoundNumber { get; set; }
         public int DurationSeconds { get; set; }
         public int RestSeconds { get; set; }
