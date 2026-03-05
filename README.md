@@ -60,7 +60,7 @@ The app utilizes a centralized `TimerService` to manage the countdown logic. Thi
 
 1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/your-username/BoxingRoundApp.git](https://github.com/your-username/BoxingRoundApp.git)
+    git clone [[https://github.com/your-username/BoxingRoundApp.git](https://github.com/your-username/BoxingRoundApp.git)](https://github.com/Jeckman03/BoxingRoundApp.git)
     ```
 2.  **Open the solution:**
     Open `BoxingRoundApp.sln` in **Visual Studio 2022**.
