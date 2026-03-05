@@ -54,4 +54,32 @@ The app utilizes a centralized `TimerService` to manage the countdown logic. Thi
 
 ### 3. State-Driven UI with DataTriggers
 **Challenge:** Handling multiple visual states (Work, Rest, Paused, Warning) without bloating the code-behind with complex imperative logic.
-**Solution:** Leveraged **XAML DataTriggers**. The UI color palette and button states transform automatically based on the `IsWorkPhase` and `IsPaused` booleans in the ViewModel. This ensures the
+**Solution:** Leveraged **XAML DataTriggers**. The UI color palette and button states transform automatically based on the `IsWorkPhase` and `IsPaused` booleans in the ViewModel. This ensures the Source of Truth" remains in the logic layer while the View reacts declaratively.
+
+## ⚙️ Installation & Setup
+
+1.  **Clone the repository:**
+    ```bash
+    git clone [https://github.com/your-username/BoxingRoundApp.git](https://github.com/your-username/BoxingRoundApp.git)
+    ```
+2.  **Open the solution:**
+    Open `BoxingRoundApp.sln` in **Visual Studio 2022**.
+3.  **Restore workloads:**
+    ```bash
+    dotnet workload restore
+    ```
+4.  **Run:**
+    Select your target (Android/iOS) and press **F5**.
+
+---
+
+## 📈 Future Roadmap
+* [ ] **WearOS Support:** Control the timer from a smartwatch while wearing gloves.
+* [ ] **Voice Commands:** Start/Stop rounds using voice recognition.
+* [ ] **Workout Summary Sharing:** Generate high-contrast "stat cards" to share on social media.
+
+---
+
+## 📝 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
