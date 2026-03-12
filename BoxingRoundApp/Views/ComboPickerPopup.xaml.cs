@@ -19,14 +19,13 @@ public partial class ComboPickerPopup : Popup<string>
 
     private void LoadButtons()
     {
-        var hits = new[] { "Jab", "Cross", "Hook", "Uppercut", "Body", "Slip" };
+        var hits = new[] { "Jab", "Cross", "Left Hook", "Right Hook", "Left Uppercut", "Right Uppercut", "Slip Left", "Slip Right", "Pivot" };
         foreach (var hit in hits)
         {
             var btn = new Button
             {
                 Text = hit,
                 Margin = 5,
-                WidthRequest = 100,
                 TextColor = Color.FromArgb("#ffffff"),
                 BackgroundColor = Color.FromArgb("#333333")
             };
